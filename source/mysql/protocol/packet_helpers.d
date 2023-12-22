@@ -461,6 +461,8 @@ do
 		hour    = packet.consume!ubyte();
 		minute  = packet.consume!ubyte();
 		second  = packet.consume!ubyte();
+		foreach(i;7..numBytes)
+			packet.consume!ubyte();
 	}
 	return DateTime(year, month, day, hour, minute, second);
 }
