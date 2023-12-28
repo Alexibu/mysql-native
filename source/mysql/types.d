@@ -1,9 +1,9 @@
 /// Structures for MySQL types not built-in to D/Phobos.
 module mysql.types;
 import taggedalgebraic.taggedalgebraic;
-import std.datetime : DateTime, TimeOfDay, Date;
+import std.datetime : DateTime, TimeOfDay, Date, SysTime;
 import std.typecons : Nullable;
-import std.conv;
+import std.format;
 
 /++
 A simple struct to represent time difference.
@@ -42,10 +42,15 @@ struct DateTimeExt
 {
 	DateTime dt;
 	alias dt this;
-	uint msecs;
+	uint usecs;
 	string toString() pure nothrow @safe const
 	{
-		return dt.toString ~ "." ~ to!string(msecs);
+		return dt.toString ~ format(".%06d",this.usecs);
+	}
+	SysTime opCast(T)() @safe const pure nothrow scope
+		if (is(immutable T == immutable SysTime))
+	{
+		return SysTime(dt) + .usecs(this.usecs);
 	}
 }
 
