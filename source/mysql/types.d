@@ -42,15 +42,14 @@ struct DateTimeExt
 {
 	DateTime dt;
 	alias dt this;
-	uint usecs;
+	uint u_seconds;
 	string toString() pure nothrow @safe const
 	{
-		return dt.toString ~ format(".%06d",this.usecs);
+		return dt.toString ~ format(".%06d",this.u_seconds);
 	}
-	SysTime opCast(T)() @safe const pure nothrow scope
-		if (is(immutable T == immutable SysTime))
+	SysTime makeSysTime(return scope immutable TimeZone tz = null) @safe const pure nothrow scope
 	{
-		return SysTime(dt) + .usecs(this.usecs);
+		return SysTime(dt,usecs(this.u_seconds),tz);
 	}
 }
 
