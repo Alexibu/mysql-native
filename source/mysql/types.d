@@ -1,7 +1,7 @@
 /// Structures for MySQL types not built-in to D/Phobos.
 module mysql.types;
 import taggedalgebraic.taggedalgebraic;
-import std.datetime : DateTime, TimeOfDay, Date, SysTime;
+import std.datetime : DateTime, TimeOfDay, Date, SysTime,TimeZone;
 import std.typecons : Nullable;
 import std.format;
 
