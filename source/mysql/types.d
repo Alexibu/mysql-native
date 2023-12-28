@@ -46,7 +46,7 @@ struct DateTimeExt
 	string toString() pure nothrow @safe const
 	{
 		try
-			return dt.toString ~ format(".%06d",this.u_seconds);
+			return dt.date.toISOExtString ~ " " ~ dt.timeOfDay.toISOExtString ~ format(".%06d",this.u_seconds);
 		catch(Exception e)
 			assert(0,"DateTimeExt.toString threw");
 	}
