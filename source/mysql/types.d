@@ -3,6 +3,7 @@ module mysql.types;
 import taggedalgebraic.taggedalgebraic;
 import std.datetime : DateTime, TimeOfDay, Date;
 import std.typecons : Nullable;
+import std.conv;
 
 /++
 A simple struct to represent time difference.
