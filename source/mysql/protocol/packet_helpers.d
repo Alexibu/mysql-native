@@ -333,18 +333,18 @@ ubyte[] pack(in DateTimeExt dt) pure nothrow
 		rv[3] = cast(ubyte)   dt.month;
 		rv[4] = cast(ubyte)   dt.day;
 	}
-	if(len == 8)
+	if(len >= 8)
 	{
 		rv[5] = cast(ubyte) dt.hour;
 		rv[6] = cast(ubyte) dt.minute;
 		rv[7] = cast(ubyte) dt.second;
 	}
-	if (len == 12)
+	if (len >= 12)
 	{
-		rv[8] = cast(ubyte)dt.u_seconds;
-		rv[9] = cast(ubyte)(dt.u_seconds >> 8);
-		rv[10] = cast(ubyte)(dt.u_seconds >> 16);
-		rv[11] = cast(ubyte)(dt.u_seconds >> 24);
+		rv[8] = cast(ubyte)(dt.u_seconds & 0x0ff);
+		rv[9] = cast(ubyte)((dt.u_seconds >> 8) & 0x0ff);
+		rv[10] = cast(ubyte)((dt.u_seconds >> 16) & 0x0ff);
+		rv[11] = cast(ubyte)((dt.u_seconds >> 24) & 0x0ff);
 	}
 	return rv;
 }
