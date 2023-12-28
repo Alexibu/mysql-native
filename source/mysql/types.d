@@ -42,6 +42,10 @@ struct DateTimeExt
 	DateTime dt;
 	alias dt this;
 	uint msecs;
+	string toString() pure nothrow @safe const
+	{
+		return dt.toString ~ "." ~ to!string(msecs);
+	}
 }
 
 
