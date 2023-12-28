@@ -33,6 +33,18 @@ struct Timestamp
 	ulong rep;
 }
 
+/++
+A D struct to stand for a DateTime with sub second resolution
+
++/
+struct DateTimeExt
+{
+	DateTime dt;
+	alias dt this;
+	uint msecs;
+}
+
+
 private union _MYTYPE
 {
 @safeOnly:
@@ -54,7 +66,7 @@ private union _MYTYPE
 	long Long;
 	float Float;
 	double Double;
-	.DateTime DateTime;
+	DateTimeExt DateTime;
 	TimeOfDay Time;
 	.Timestamp Timestamp;
 	.Date Date;
@@ -74,7 +86,7 @@ private union _MYTYPE
 	const(long)* LongRef;
 	const(float)* FloatRef;
 	const(double)* DoubleRef;
-	const(.DateTime)* DateTimeRef;
+	const(DateTimeExt)* DateTimeRef;
 	const(TimeOfDay)* TimeRef;
 	const(.Date)* DateRef;
 	const(string)* TextRef;
@@ -209,7 +221,7 @@ package MySQLVal _toVal(Variant v)
 			enum FQN = T.stringof;
 	}
 
-	alias BasicTypes = AliasSeq!(bool, byte, ubyte, short, ushort, int, uint, long, ulong, float, double, DateTime, TimeOfDay, Date, Timestamp);
+	alias BasicTypes = AliasSeq!(bool, byte, ubyte, short, ushort, int, uint, long, ulong, float, double, DateTimeExt, TimeOfDay, Date, Timestamp);
 	alias ArrayTypes = AliasSeq!(char[], const(char)[],
 								 ubyte[], const(ubyte)[], immutable(ubyte)[]);
 
