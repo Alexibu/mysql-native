@@ -1,7 +1,7 @@
 /// Structures for MySQL types not built-in to D/Phobos.
 module mysql.types;
 import taggedalgebraic.taggedalgebraic;
-import std.datetime : DateTime, TimeOfDay, Date, SysTime,TimeZone;
+import std.datetime : DateTime, TimeOfDay, Date, SysTime,TimeZone,usecs;
 import std.typecons : Nullable;
 import std.format;
 
@@ -45,9 +45,12 @@ struct DateTimeExt
 	uint u_seconds;
 	string toString() pure nothrow @safe const
 	{
-		return dt.toString ~ format(".%06d",this.u_seconds);
+		try
+			return dt.toString ~ format(".%06d",this.u_seconds);
+		catch(Exception e)
+			assert(0,"DateTimeExt.toString threw");
 	}
-	SysTime makeSysTime(return scope immutable TimeZone tz = null) @safe const pure nothrow scope
+	SysTime makeSysTime(return scope immutable TimeZone tz = null) @safe const scope
 	{
 		return SysTime(dt,usecs(this.u_seconds),tz);
 	}
