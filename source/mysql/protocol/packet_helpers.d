@@ -322,7 +322,7 @@ ubyte[] pack(in DateTimeExt dt) pure nothrow
 	uint len = 1;
 	if (dt.year || dt.month || dt.day) len = 5;
 	if (dt.hour || dt.minute|| dt.second) len = 8;
-	if (dt.msecs) len = 12;
+	if (dt.u_seconds) len = 12;
 	ubyte[] rv;
 	rv.length = len;
 	rv[0] =  cast(ubyte)(rv.length - 1); // num bytes
@@ -341,10 +341,10 @@ ubyte[] pack(in DateTimeExt dt) pure nothrow
 	}
 	if (len == 12)
 	{
-		rv[8] = cast(ubyte)dt.msecs;
-		rv[9] = cast(ubyte)(dt.msecs >> 8);
-		rv[10] = cast(ubyte)(dt.msecs >> 16);
-		rv[11] = cast(ubyte)(dt.msecs >> 24);
+		rv[8] = cast(ubyte)dt.u_seconds;
+		rv[9] = cast(ubyte)(dt.u_seconds >> 8);
+		rv[10] = cast(ubyte)(dt.u_seconds >> 16);
+		rv[11] = cast(ubyte)(dt.u_seconds >> 24);
 	}
 	return rv;
 }
@@ -466,7 +466,7 @@ do
 	int hour    = 0;
 	int minute  = 0;
 	int second  = 0;
-	int msecs = 0;
+	int u_seconds = 0;
 	if(numBytes > 4)
 	{
 		enforce!MYXProtocol(numBytes >= 7, "Supplied packet is not large enough to store a DateTime with TimeOfDay");
@@ -476,9 +476,9 @@ do
 	}
 	if (numBytes >= 11)
 	{
-		msecs = packet.consume!uint;
+		u_seconds = packet.consume!uint;
 	}
-	return DateTimeExt(DateTime(year, month, day, hour, minute, second),msecs);
+	return DateTimeExt(DateTime(year, month, day, hour, minute, second),u_seconds);
 }
 
 
