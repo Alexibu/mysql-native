@@ -593,8 +593,8 @@ SQLValue consumeBinaryValueIfComplete(T, int N=T.sizeof)(ref ubyte[] packet, boo
 {
 	SQLValue result;
 
-	// Length of DateTime packet is NOT DateTime.sizeof, it can be 1, 5 or 8 bytes
-	static if(is(T==DateTime))
+	// Length of DateTime packet is NOT DateTime.sizeof, it can be 1, 5 or 8 or 12 bytes
+	static if(is(T==DateTimeExt))
 		result.isIncomplete = packet.length < 1;
 	else
 		result.isIncomplete = packet.length < N;
