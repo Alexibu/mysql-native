@@ -54,6 +54,17 @@ struct DateTimeExt
 	{
 		return SysTime(dt,usecs(this.u_seconds),tz);
 	}
+	DateTimeExt opAssign(const DateTime x) @safe
+	{
+		dt = x;
+		u_seconds  = 0;
+		return this;
+	}
+	DateTime opCast(T)()
+	if (is(T == DateTime))
+	{
+		return dt;
+	}
 }
 
 
